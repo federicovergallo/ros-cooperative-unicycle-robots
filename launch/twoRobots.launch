@@ -1,0 +1,26 @@
+<launch>
+     <node pkg="rosbag" type="record" name="robot1_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/robot1_bag.bag stateTopic_robot1 "/>  
+     <node pkg="rosbag" type="record" name="robot2_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/robot2_bag.bag stateTopic_robot2 "/>  
+     <node pkg="rosbag" type="record" name="w_robot1_record"
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/w_robot1_bag.bag inputTopic_robot1"  />  
+     <node pkg="rosbag" type="record" name="w_robot2_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/w_robot2_bag.bag inputTopic_robot2" /> 
+     <node pkg="rosbag" type="record" name="var_robot1_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/var_robot1_bag.bag varTopic_robot1" /> 
+     <node pkg="rosbag" type="record" name="var_robot2_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/var_robot2_bag.bag varTopic_robot2" /> 
+     <arg name="robot_name1"/>
+     <node pkg="comunicating_robots" ns="sim1" name="simulator_robot1" type="simulator.py" output="screen" />
+        <param name="sim1/" value="$(arg robot_name1)"/>
+     <arg name="robot_name2"/>
+     <node pkg="comunicating_robots" ns="sim2" name="simulator_robot2" type="simulator.py" output="screen" launch-prefix="gnome-terminal --command"  />
+     <param name="sim2/" value="$(arg robot_name2)"/>
+  <node pkg="comunicating_robots" ns="sim1" name="pdes_comunicator_robot1" type="pdes_comunicator.py" />
+  <node pkg="comunicating_robots" ns="sim2" name="pdes_comunicator_robot2" type="pdes_comunicator.py" />
+  <node pkg="comunicating_robots" ns="sim1" name="controller_robot1" type="controller.py" output="screen" launch-prefix="gnome-terminal --command"/>
+  <node pkg="comunicating_robots" ns="sim2" name="controller_robot2" type="controller.py" output="screen" launch-prefix="gnome-terminal --command" />
+
+
+</launch>

@@ -1,0 +1,45 @@
+<launch>
+     <node pkg="rosbag" type="record" name="robot1_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/robot1_bag.bag --duration=5m stateTopic_robot1 "/>  
+     <node pkg="rosbag" type="record" name="robot2_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/robot2_bag.bag --duration=5m stateTopic_robot2 "/>  
+     <node pkg="rosbag" type="record" name="robot3_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/robot3_bag.bag --duration=5m stateTopic_robot3 "/>  
+     <node pkg="rosbag" type="record" name="robot4_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/robot4_bag.bag --duration=5m stateTopic_robot4 "/>  
+     <node pkg="rosbag" type="record" name="w_robot1_record"
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/w_robot1_bag.bag --duration=5m paramsTopic_robot1"  />  
+     <node pkg="rosbag" type="record" name="w_robot2_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/w_robot2_bag.bag --duration=5m  paramsTopic_robot2" /> 
+     <node pkg="rosbag" type="record" name="w_robot3_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/w_robot3_bag.bag --duration=5m paramsTopic_robot3" />
+     <node pkg="rosbag" type="record" name="w_robot4_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/w_robot4_bag.bag --duration=5m paramsTopic_robot4" />
+     <node pkg="rosbag" type="record" name="var_robot1_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/var_robot1_bag.bag --duration=5m varTopic_robot1" /> 
+     <node pkg="rosbag" type="record" name="var_robot2_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/var_robot2_bag.bag --duration=5m varTopic_robot2" /> 
+     <node pkg="rosbag" type="record" name="var_robot3_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/var_robot3_bag.bag --duration=5m varTopic_robot3" /> 
+     <node pkg="rosbag" type="record" name="var_robot4_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/var_robot4_bag.bag --duration=5m varTopic_robot4" /> 
+     <arg name="robot_name1"/>
+     <node pkg="comunicating_robots" ns="sim1" name="simulator_robot1" type="simulator.py" output="screen"/>
+        <param name="sim1/" value="robot1" />
+     <arg name="robot_name2"/>
+     <node pkg="comunicating_robots" ns="sim2" name="simulator_robot2" type="simulator.py" output="screen" launch-prefix="gnome-terminal --command"  />
+     <param name="sim2/" value="robot2" />
+     <arg name="robot_name3"/>
+     <node pkg="comunicating_robots" ns="sim3" name="simulator_robot3" type="simulator.py" output="screen" launch-prefix="gnome-terminal --command" />
+     <param name="sim3/" value="robot3"/>
+     <node pkg="comunicating_robots" ns="sim4" name="simulator_robot4" type="simulator.py" output="screen" launch-prefix="gnome-terminal --command" />
+     <param name="sim4/" value="robot4" />
+  <node pkg="comunicating_robots" ns="sim1" name="pdes_comunicator_robot1" type="pdes_comunicator.py" />
+  <node pkg="comunicating_robots" ns="sim2" name="pdes_comunicator_robot2" type="pdes_comunicator.py" />
+  <node pkg="comunicating_robots" ns="sim3" name="pdes_comunicator_robot3" type="pdes_comunicator.py" />
+  <node pkg="comunicating_robots" ns="sim4" name="pdes_comunicator_robot4" type="pdes_comunicator.py" />
+  <node pkg="comunicating_robots" ns="sim1" name="controller_robot1" type="controller.py" />
+  <node pkg="comunicating_robots" ns="sim2" name="controller_robot2" type="controller.py"/>
+  <node pkg="comunicating_robots" ns="sim3" name="controller_robot3" type="controller.py"/>
+  <node pkg="comunicating_robots" ns="sim4" name="controller_robot4" type="controller.py"/>
+</launch>

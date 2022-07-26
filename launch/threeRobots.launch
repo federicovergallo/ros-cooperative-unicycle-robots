@@ -1,0 +1,31 @@
+<launch>
+     <node pkg="rosbag" type="record" name="robot1_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/robot1_bag.bag  stateTopic_robot1 "/>  
+     <node pkg="rosbag" type="record" name="robot2_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/robot2_bag.bag  stateTopic_robot2 "/>  
+     <node pkg="rosbag" type="record" name="robot3_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/robot3_bag.bag  stateTopic_robot3 "/>  
+     <node pkg="rosbag" type="record" name="w_robot1_record"
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/w_robot1_bag.bag inputTopic_robot1"  />  
+     <node pkg="rosbag" type="record" name="w_robot2_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/w_robot2_bag.bag inputTopic_robot2" /> 
+     <node pkg="rosbag" type="record" name="w_robot3_record" 
+         args="record -O ../catkin_ws/src/comunicating_robots/bagfiles/w_robot3_bag.bag inputTopic_robot3" /> 
+
+     <arg name="robot_name1"/>
+     <node pkg="comunicating_robots" ns="sim1" name="simulator_robot1" type="simulator.py" output="screen" />
+        <param name="sim1/" value="robot1"/>
+     <arg name="robot_name2"/>
+     <node pkg="comunicating_robots" ns="sim2" name="simulator_robot2" type="simulator.py"  />
+     <param name="sim2/" value="robot2"/>
+     <arg name="robot_name3"/>
+     <node pkg="comunicating_robots" ns="sim3" name="simulator_robot3" type="simulator.py"  />
+     <param name="sim3/" value="robot3"/>
+  <node pkg="comunicating_robots" ns="sim1" name="pdes_comunicator_robot1" type="pdes_comunicator.py" output="screen" />
+  <node pkg="comunicating_robots" ns="sim2" name="pdes_comunicator_robot2" type="pdes_comunicator.py" />
+  <node pkg="comunicating_robots" ns="sim3" name="pdes_comunicator_robot3" type="pdes_comunicator.py" />
+  <node pkg="comunicating_robots" ns="sim1" name="controller_robot1" type="controller.py" output="screen" launch-prefix="gnome-terminal --command"/>
+  <node pkg="comunicating_robots" ns="sim2" name="controller_robot2" type="controller.py"/>
+  <node pkg="comunicating_robots" ns="sim3" name="controller_robot3" type="controller.py"/>
+
+</launch>
